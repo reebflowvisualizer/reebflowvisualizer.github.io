@@ -1,0 +1,32 @@
+[
+  {
+    "id": "torus",
+    "label": "torus",
+    "path": "datasets/torus/index.html",
+    "timesteps": 100,
+    "media_files": 1978,
+    "media_size_bytes": 85852988,
+    "dataset_size_bytes": 104913038,
+    "includes_fiber_surfaces": false
+  },
+  {
+    "id": "MVK_s1",
+    "label": "MVK s1",
+    "path": "datasets/MVK_s1/index.html",
+    "timesteps": 83,
+    "media_files": 3320,
+    "media_size_bytes": 342577349,
+    "dataset_size_bytes": 388948128,
+    "includes_fiber_surfaces": true
+  },
+  {
+    "id": "MVK_s2",
+    "label": "MVK s2",
+    "path": "datasets/MVK_s2/index.html",
+    "timesteps": 82,
+    "media_files": 3280,
+    "media_size_bytes": 492912031,
+    "dataset_size_bytes": 539366852,
+    "includes_fiber_surfaces": true
+  }
+]

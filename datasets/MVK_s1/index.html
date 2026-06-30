@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reeb flow visualizer</title>
+  <link rel="stylesheet" href="style.css?v=pages-1782826105">
+</head>
+<body class="public-page">
+  <header class="public-header">
+    <div class="title-block">
+      <h1>Reeb flow visualizer</h1>
+      <p>Explore time-varying reeb-space sheets with linked sankey, image, and analysis views.</p>
+    </div>
+      <div class="dataset-switcher">
+        <label>
+          Dataset
+          <select id="datasetSelect">
+          <option value="torus">torus</option>
+          <option value="MVK_s1" selected>MVK s1</option>
+          <option value="MVK_s2">MVK s2</option>
+          </select>
+        </label>
+      </div>
+    <div class="header-actions">
+      <button id="zoomOut">Zoom out</button>
+      <button id="zoomIn">Zoom in</button>
+      <button id="centerView">Center sankey</button>
+      <button id="saveFigurePreset">Save figure preset</button>
+      <button id="addPanel">+ Add panel</button>
+    </div>
+  </header>
+
+  <main>
+    <aside id="controls">
+      <section>
+        <h2>Timestep ranges</h2>
+        <div id="rangeRows"></div>
+        <div class="row-actions">
+          <button id="addRange">+ Add range</button>
+        </div>
+        <p class="hint">Drag on the bar to create a range. Click a range to select it. Delete removes the selected range.</p>
+      </section>
+
+
+      <section>
+        <h2>Layout</h2>
+        <label>
+          Sorting
+          <select id="orderingMode">
+            <option value="crossings" selected>Weighted crossing-reduced</option>
+            <option value="area">Sheet area</option>
+            <option value="vertices">Domain vertex count</option>
+          </select>
+        </label>
+        <label>
+          Node height basis
+          <select id="nodeSizeMode">
+            <option value="vertices" selected>Domain vertex count</option>
+          </select>
+        </label>
+        <label>
+          Top sheets
+          <input id="topSheets" type="number" min="1" step="1" value="10">
+        </label>
+        <label>
+          Timestep sampling
+          <select id="timestepStride"></select>
+        </label>
+        <label>
+          Node color
+          <select id="nodeColorMode">
+            <option value="solid" selected>Solid</option>
+            <option value="area">Sheet area</option>
+            <option value="vertices">Domain vertex count</option>
+            <option value="centroid_position">Sheet centroid</option>
+          </select>
+        </label>
+        <div id="centroidColorLegend" class="centroid-color-legend" hidden>
+          <div class="centroid-color-title">2D Centroid color</div>
+          <div id="centroidYMax" class="centroid-axis-label"></div>
+          <div class="centroid-color-row">
+            <div id="centroidXMin" class="centroid-axis-label"></div>
+            <canvas id="centroidColorCanvas" width="112" height="112" aria-label="Centroid color space"></canvas>
+            <div id="centroidXMax" class="centroid-axis-label"></div>
+          </div>
+          <div id="centroidYMin" class="centroid-axis-label"></div>
+        </div>
+        <label>
+          Link darkness
+          <input id="linkDarkness" type="range" min="0" max="100" step="1" value="55">
+          <span id="linkDarknessValue">55%</span>
+        </label>
+        <label class="inline">
+          <input id="hideIsolated" type="checkbox">
+          Hide nodes with no visible links
+        </label>
+        <label class="inline">
+          <input id="strongestOutgoingOnly" type="checkbox">
+          Keep strongest outgoing link per node
+        </label>
+        <label class="inline">
+          <input id="hideSheetLabels" type="checkbox">
+          Hide sheet labels
+        </label>
+      </section>
+    </aside>
+
+    <section id="viewer">
+      <div id="rangeBarWrap">
+        <svg id="rangeBar" aria-label="Timestep range selector"></svg>
+      </div>
+      <div id="panelList"></div>
+    </section>
+
+    <aside id="details">
+      <h2>Details</h2>
+      <div id="detailsContent">Click a node or link.</div>
+    </aside>
+  </main>
+
+  <div id="tooltip" class="tooltip hidden"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="viewer_common.js?v=1782825927"></script>
+  <script src="viewer.js?v=1782824327"></script>
+  <script>
+    (() => {
+      const DATASETS = [{"id":"torus","label":"torus"},{"id":"MVK_s1","label":"MVK s1"},{"id":"MVK_s2","label":"MVK s2"}];
+      const CURRENT_DATASET = "MVK_s1";
+      const select = document.getElementById("datasetSelect");
+      if (!select) return;
+      select.addEventListener("change", () => {
+        const dataset = DATASETS.find(item => item.id === select.value);
+        if (!dataset || dataset.id === CURRENT_DATASET) return;
+        window.location.href = `../${dataset.id}/index.html`;
+      });
+    })();
+  </script>
+</body>
+</html>
